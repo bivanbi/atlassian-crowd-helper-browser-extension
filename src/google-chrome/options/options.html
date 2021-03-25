@@ -1,17 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" title="Crowd Helper Extension Settings">
-  <head>
+<html lang="en" title="Options - Crowd Helper Extension">
+<head>
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l">
     <link rel="stylesheet" href="options.css">
-  </head>
-  <body>
-    <form id="crowdHelperSettings">
-      <div class="form-group">
-        <label for="crowdContext">Set Crowd context path here, e.g.: https://somecrowd.host.com/context. Default is <i>/crowd</i></i></label>
-        <input type="text" id="crowdContext" placeholder="/crowd">
-      </div>
-      <input type="submit" name="Save" value="Save">
-    </form>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <h1>Atlassian Crowd Helper Options</h1>
     </div>
-  </body>
-  <script src="options.js"></script>
+
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <form id="crowdHelperOptions">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h2>Default E-mail Domain</h2>
+                        System-wide default e-mail domain. Used when auto-completing e-mail address input in <i>Add
+                        User</i>
+                        form.
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label class="input-group-text" for="systemWideDefaultEmailDomain">@</label>
+                            <input class="form-control" type="text" id="systemWideDefaultEmailDomain"
+                                   placeholder="example.com">
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <input type="submit" class="btn btn-primary" name="Save" value="Save">
+                    </div>
+                </div>
+                <div id="submitStatus" class="alert invisible mt-1"></div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2>Reset Settings</h2>
+                    Remove all ACHBrE settings stored in this browser.
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-outline-danger" id="resetSettings"
+                            value="Reset Settings"
+                            title="Erase All Stored Data including Crowd directory-specific settings">Reset Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="bootstrap/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
+<script src="bootstrap/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"></script>
+<script src="options.js"></script>
 </html>

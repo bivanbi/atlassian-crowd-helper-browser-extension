@@ -1,48 +1,76 @@
-let page = document.getElementById("buttonDiv");
-let defaultCrowdContext = '/crowd';
+const STATUS_OK = 'OK',
+    STATUS_FAILED = 'FAILED',
+    HTML_CLASS_ALERT_DANGER = 'alert-danger',
+    HTML_CLASS_ALERT_SUCCESS = 'alert-success',
+    HTML_CLASS_INVISIBLE = 'invisible';
 
-
-function getContextInput() {
-    return document.getElementById("crowdContext");
+function constructOptions() {
+    chrome.storage.sync.get("options", (data) => {
+        options = data.options || {};
+        console.debug("Stored options:");
+        console.debug(options);
+        getEmailDomainInput().value = options.emailDomain || '';
+        getOptionsForm().addEventListener("submit", handleOptionsFormSubmit);
+        getResetSettingsButton().addEventListener("click", handleResetSettingsButtonClick);
+    });
 }
 
-function getSettingsForm() {
-    return document.getElementById("crowdHelperSettings");
+function getEmailDomainInput() {
+    return document.getElementById("systemWideDefaultEmailDomain");
 }
 
-console.log("onInstalled I am!");
+function getOptionsForm() {
+    return document.getElementById("crowdHelperOptions");
+}
 
-// Reacts to a button click by marking marking the selected button and saving
-// the selection
-function handleSettingsFormSubmit(event) {
+function getResetSettingsButton() {
+    return document.getElementById("resetSettings")
+}
+
+function handleOptionsFormSubmit(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    console.log("Save settings");
-    //let color = event.target.dataset.color;
-    saveData = {context: getContextInput().getAttribute("value"), namegvalami: 'ez'};
-    console.log(saveData);
+    console.log("Save options");
+    console.log(getEmailDomainInput().value);
+    let options = {emailDomain: getEmailDomainInput().value},
+        saveData = {options: options};
     chrome.storage.sync.set(saveData, function () {
-        console.log('Settings are saved');
+        console.log('Options are saved');
+        updateStatus(STATUS_OK, "Saved")
     });
 }
 
-// Add a button to the page for each supplied color
-function constructOptions() {
-    chrome.storage.sync.get(null, (data) => {
-        console.log(data);
-    });
-    chrome.storage.sync.get("context", (data) => {
-        let context = data.context;
-        console.log(data);
+function updateStatus(status, message) {
+    let statusElement = getSubmitStatusElement()
+    resetStatusElement()
+    if (status === STATUS_OK) {
+        statusElement.classList.add(HTML_CLASS_ALERT_SUCCESS)
+    } else {
+        statusElement.classList.add(HTML_CLASS_ALERT_DANGER)
+    }
+    statusElement.innerText = message
+}
 
-        if (context === undefined) {
-            context = defaultCrowdContext;
-            console.log("No context set yet, applying default: " + context);
-        }
+function resetStatusElement()
+{
+    getSubmitStatusElement().classList.remove(HTML_CLASS_INVISIBLE, HTML_CLASS_ALERT_DANGER, HTML_CLASS_ALERT_SUCCESS)
+}
+function getSubmitStatusElement() {
+    return document.getElementById("submitStatus")
+}
 
-        getContextInput().setAttribute("value", context);
-        getSettingsForm().addEventListener("submit", handleSettingsFormSubmit);
+function handleResetSettingsButtonClick(event) {
+    event.stopPropagation()
+    event.preventDefault()
+    if (!confirm("Are you sure you want to erase all stored settings?")) {
+        return
+    }
+
+    console.debug("Reset settings requested");
+    chrome.storage.sync.clear(() => {
+        console.debug("Reloading");
+        location.reload();
     });
 }
 
