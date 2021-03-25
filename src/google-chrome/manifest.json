@@ -1,7 +1,7 @@
 {
   "name": "Crowd User Management Helper Extension",
   "description": "To help with Atlassian Crowd User Management",
-  "version": "1.2.1",
+  "version": "1.0.0",
   "manifest_version": 3,
   "content_scripts": [
     {
