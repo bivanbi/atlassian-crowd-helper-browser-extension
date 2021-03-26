@@ -22,6 +22,14 @@ ACHBrE is a [free software](http://www.gnu.org/licenses/quick-guide-gplv3.html) 
 under [GNU/GPL v3.0](LICENSE.md). You are free to use, share and modify it as long as you obey the rules laid out by
 GNU/GPL license - basically, your modified copy must also be licensed under GNU/GPL.
 
+### 3rd Party Libraries
+
+#### Extension Settings Page Visual Styling
+
+* [Bootstrap](https://getbootstrap.com) is licensed
+  under [MIT license and is copyright 2018 Twitter](https://getbootstrap.com/docs/4.0/about/license/).
+* [JQuery](https://jquery.org/) is licensed under [MIT license](https://jquery.org/license/)
+
 ## Supported Platforms
 
 ### Browsers
@@ -83,6 +91,20 @@ requires [developer mode to be turned on in Google Chrome](https://developer.chr
 1. Browse to the ```src/google-chrome``` directory within the downloaded repository
 
 Once installed, you need to *enable* the plugin on each Crowd UI URL you intend to use it on.
+
+### Installing [Bootstrap](https://getbootstrap.com) for Options page visual styling (optional)
+
+1. Create directory ```src/google-chrome/vendor/bootstrap```
+1. Go to [Download Bootstrap 4.6](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
+1. Download components form the above link into the ```src/google-chrome/vendor/bootstrap``` directory
+   and rename the downloaded files to exclude version numbers.
+   
+The result should be something like this:
+```
+src/google-chrome/vendor/bootstrap/bootstrap.min.css
+src/google-chrome/vendor/bootstrap/bootstrap.bundle.min.js
+src/google-chrome/vendor/bootstrap/jquery.slim.min.js
+```
 
 ## Why browser extension and not Crowd plugin?
 
