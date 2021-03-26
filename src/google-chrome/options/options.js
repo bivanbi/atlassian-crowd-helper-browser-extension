@@ -6,12 +6,12 @@ const STATUS_OK = 'OK',
 
 function constructOptions() {
     chrome.storage.sync.get("options", (data) => {
-        options = data.options || {};
+        let options = data.options || {};
         console.debug("Stored options:");
         console.debug(options);
         getEmailDomainInput().value = options.emailDomain || '';
         getOptionsForm().addEventListener("submit", handleOptionsFormSubmit);
-        getResetSettingsButton().addEventListener("click", handleResetSettingsButtonClick);
+        getClearStoredDataButton().addEventListener("click", handleClearStoredDataButtonClick);
     });
 }
 
@@ -23,8 +23,8 @@ function getOptionsForm() {
     return document.getElementById("crowdHelperOptions");
 }
 
-function getResetSettingsButton() {
-    return document.getElementById("resetSettings")
+function getClearStoredDataButton() {
+    return document.getElementById("clearStoredData")
 }
 
 function handleOptionsFormSubmit(event) {
@@ -60,16 +60,17 @@ function getSubmitStatusElement() {
     return document.getElementById("submitStatus")
 }
 
-function handleResetSettingsButtonClick(event) {
+function handleClearStoredDataButtonClick(event) {
     event.stopPropagation()
     event.preventDefault()
-    if (!confirm("Are you sure you want to erase all stored settings?")) {
+    if (!confirm("Are you sure you want to clear all stored data?")) {
+        console.log("Clear stored data cancelled");
         return
     }
 
-    console.debug("Reset settings requested");
+    console.log("Clear stored data confirmed");
     chrome.storage.sync.clear(() => {
-        console.debug("Reloading");
+        console.log("Data cleared, reloading");
         location.reload();
     });
 }
