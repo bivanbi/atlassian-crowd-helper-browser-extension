@@ -74,5 +74,4 @@ function handleResetSettingsButtonClick(event) {
     });
 }
 
-// Initialize the page by constructing the color options
 constructOptions();
