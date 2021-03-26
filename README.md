@@ -94,14 +94,17 @@ Once installed, you need to *enable* the plugin on each Crowd UI URL you intend 
 
 ### Installing [Bootstrap](https://getbootstrap.com) for Options page visual styling (optional)
 
+1. Create directory ```src/google-chrome/vendor/bootstrap```
 1. Go to [Download Bootstrap 4.6](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
-1. Download components form the above link:
-    * ```bootstrap.min.css```,
-    * ```bootstrap.bundle.min.js``` and
-    * ```jquery-slim.min```
-1. Remove version numbers from the downloaded files' names or update ```src/options/options.html``` to include the
-   correct version number for each file,
-1. Create directory ```src/google-chrome/options/bootstrap``` and move / copy downloaded and renamed files there.
+1. Download components form the above link into the ```src/google-chrome/vendor/bootstrap``` directory
+   and rename the downloaded files to exclude version numbers.
+   
+The result should be something like this:
+```
+src/google-chrome/vendor/bootstrap/bootstrap.min.css
+src/google-chrome/vendor/bootstrap/bootstrap.bundle.min.js
+src/google-chrome/vendor/bootstrap/jquery.slim.min.js
+```
 
 ## Why browser extension and not Crowd plugin?
 
