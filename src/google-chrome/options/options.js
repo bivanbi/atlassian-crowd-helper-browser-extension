@@ -4,15 +4,14 @@ const STATUS_OK = 'OK',
     HTML_CLASS_ALERT_SUCCESS = 'alert-success',
     HTML_CLASS_INVISIBLE = 'invisible';
 
+let options = new Options();
+
 function constructOptions() {
-    chrome.storage.sync.get("options", (data) => {
-        let options = data.options || {};
-        console.debug("Stored options:");
-        console.debug(options);
+    options.load().then(() => {
         getEmailDomainInput().value = options.emailDomain || '';
         getOptionsForm().addEventListener("submit", handleOptionsFormSubmit);
         getClearStoredDataButton().addEventListener("click", handleClearStoredDataButtonClick);
-    });
+    })
 }
 
 function getEmailDomainInput() {
@@ -33,12 +32,14 @@ function handleOptionsFormSubmit(event) {
 
     console.log("Save options");
     console.log(getEmailDomainInput().value);
-    let options = {emailDomain: getEmailDomainInput().value},
-        saveData = {options: options};
-    chrome.storage.sync.set(saveData, function () {
+    options.emailDomain = getEmailDomainInput().value;
+    options.save().then(() => {
         console.log('Options are saved');
         updateStatus(STATUS_OK, "Saved")
-    });
+    }).catch((message) => {
+        console.log('Failed to save options: ' + message);
+        updateStatus(STATUS_FAILED, "Failed: " + message)
+    })
 }
 
 function updateStatus(status, message) {
@@ -69,7 +70,8 @@ function handleClearStoredDataButtonClick(event) {
     }
 
     console.log("Clear stored data confirmed");
-    chrome.storage.sync.clear(() => {
+    let storage = new StorageProvider();
+    storage.clear().then(() => {
         console.log("Data cleared, reloading");
         location.reload();
     });

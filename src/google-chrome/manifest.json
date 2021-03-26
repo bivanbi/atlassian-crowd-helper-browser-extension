@@ -5,6 +5,10 @@
   "manifest_version": 3,
   "content_scripts": [
     {
+      "matches": ["*://*/*/secure/*"],
+      "js": ["lib/options.js", "lib/storageProvider.js"]
+    },
+    {
       "matches": ["*://*/*/secure/user/add.action*"],
       "js": ["contentScripts/genericFunctions.js", "contentScripts/user/userAddHelper.js"]
     },
