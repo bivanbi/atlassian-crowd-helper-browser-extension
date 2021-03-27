@@ -1,36 +1,96 @@
 {
-  "name": "Atlassian Crowd Helper",
-  "description": "Browser extension to streamline Atlassian Crowd admin UI",
-  "version": "1.0.0",
-  "manifest_version": 3,
-  "content_scripts": [
-    {
-      "matches": ["*://*/*/secure/*"],
-      "js": ["lib/options.js", "lib/storageProvider.js"]
+    "name": "Atlassian Crowd Helper",
+    "description": "Browser extension to streamline Atlassian Crowd admin UI",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*/secure/*"
+            ],
+            "js": [
+                "lib/options.js",
+                "lib/storageProvider.js",
+                "lib/elementPromiser.js",
+                "lib/crowdSearchInputElementPromiser.js",
+                "contentScripts/genericFunctions.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/application/browse.action*"
+            ],
+            "js": [
+                "contentScripts/application/applicationBrowseHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/application/*ermissions*action*"
+            ],
+            "js": [
+                "contentScripts/application/applicationDirectoryPermissionHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/directory/browse.action*"
+            ],
+            "js": [
+                "contentScripts/directory/directoryBrowseHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/group/add*action*"
+            ],
+            "js": [
+                "contentScripts/group/groupAddHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/group/browse.action*"
+            ],
+            "js": [
+                "contentScripts/group/groupBrowseHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/group/remove.action*"
+            ],
+            "js": [
+                "contentScripts/group/groupRemoveHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/user/add.action*"
+            ],
+            "js": [
+                "contentScripts/user/userAddHelper.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*/secure/user/browse.action*"
+            ],
+            "js": [
+                "contentScripts/user/userBrowseHelper.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "icons": {
+        "16": "/images/crowd_helper16.png",
+        "32": "/images/crowd_helper32.png",
+        "48": "/images/crowd_helper48.png",
+        "128": "/images/crowd_helper128.png"
     },
-    {
-      "matches": ["*://*/*/secure/user/add.action*"],
-      "js": ["contentScripts/genericFunctions.js", "contentScripts/user/userAddHelper.js"]
-    },
-    {
-      "matches": ["*://*/*/secure/group/add*action*"],
-      "js": ["contentScripts/genericFunctions.js", "contentScripts/group/groupAddHelper.js"]
-    },
-    {
-      "matches": ["*://*/*/secure/group/remove.action*"],
-      "js": ["contentScripts/genericFunctions.js", "contentScripts/group/groupRemoveHelper.js"]
-    },
-    {
-      "matches": ["*://*/*/secure/application/*ermissions*action*"],
-      "js": ["contentScripts/genericFunctions.js", "contentScripts/application/applicationDirectoryPermissionHelper.js"]
-    }
-  ],
-  "permissions": ["storage", "activeTab", "scripting"],
-  "icons": {
-    "16": "/images/crowd_helper16.png",
-    "32": "/images/crowd_helper32.png",
-    "48": "/images/crowd_helper48.png",
-    "128": "/images/crowd_helper128.png"
-  },
-  "options_page": "options/options.html"
+    "options_page": "options/options.html"
 }

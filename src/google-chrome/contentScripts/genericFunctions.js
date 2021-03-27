@@ -245,3 +245,11 @@ function getSelectedDirectoryList(allDirectoriesSelectedCheckboxElementId, singl
 
     return directoryList;
 }
+
+function focusSearchInputElement(searchInputElementName) {
+    new CrowdSearchInputElementPromiser(searchInputElementName).get()
+        .then((element) => {
+            console.log("Focusing search input");
+            element.focus();
+        });
+}
