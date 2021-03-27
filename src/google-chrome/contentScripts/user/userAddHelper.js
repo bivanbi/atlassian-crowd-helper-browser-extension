@@ -24,6 +24,7 @@ window.addEventListener('load', () => {
     options.load().then(() => {
         emailDomain = options.emailDomain;
         updateEmailInputElementValue(generateEmailAddress(''));
+        usernameInputElement.focus()
     })
     console.log("Crowd User Add Helper Content Script initialized on " + window.location.pathname);
 });
