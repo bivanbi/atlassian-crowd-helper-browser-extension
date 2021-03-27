@@ -82,9 +82,7 @@
         }
     ],
     "permissions": [
-        "storage",
-        "activeTab",
-        "scripting"
+        "storage"
     ],
     "icons": {
         "16": "/images/crowd_helper16.png",
