@@ -12,6 +12,7 @@ window.addEventListener('load', () => {
     augmentGroupAddForm();
     makeGroupNameInputRequired();
     document.getElementById(groupAddFormElementId).addEventListener('submit', onGroupAddFormSubmit);
+    getGroupNameInputElement().focus();
     console.debug("Crowd Group Add Helper Content Script initialized on " + window.location.pathname);
 });
 
@@ -46,7 +47,11 @@ function createAddGroupToAllDirectoriesLabelElement() {
 }
 
 function makeGroupNameInputRequired() {
-    document.getElementById(groupNameInputElementId).setAttribute("required", "");
+    getGroupNameInputElement().setAttribute("required", "");
+}
+
+function getGroupNameInputElement() {
+    return document.getElementById(groupNameInputElementId);
 }
 
 function onGroupAddFormSubmit(event) {
@@ -70,15 +75,15 @@ function onGroupAddFormSubmit(event) {
             });
 
     } catch (e) {
-        console.error(e)
-        addGroupProgress.failProgressWithMessage('Failed: ' + e)
+        console.error(e);
+        addGroupProgress.failProgressWithMessage('Failed: ' + e);
         event.target.appendChild(progressStatusElement);
     }
 }
 
 function getDirectoryListForSubmission(formData) {
     let selectedDirectoryId = getDirectoryIdFromFormData(formData);
-    return getSelectedDirectoryList(addGroupToAllDirectoriesElementId, selectedDirectoryId)
+    return getSelectedDirectoryList(addGroupToAllDirectoriesElementId, selectedDirectoryId);
 }
 
 function getDirectoryIdFromFormData(data) {
