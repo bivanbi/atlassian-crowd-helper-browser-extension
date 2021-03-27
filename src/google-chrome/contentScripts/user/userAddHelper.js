@@ -6,7 +6,8 @@ const emailInputElementId = 'email',
     passwordInputElementId = 'password',
     passwordConfirmInputElementId = 'passwordConfirm';
 
-let defaultEmailDomain = 'example.com';
+let options = new Options(),
+    emailDomain = 'example.com';
 
 window.addEventListener('load', () => {
     console.debug("Crowd User Add Helper Content Script begin");
@@ -20,17 +21,29 @@ window.addEventListener('load', () => {
     let password = generateRandomString(29);
     document.getElementById(passwordInputElementId).value = password;
     document.getElementById(passwordConfirmInputElementId).value = password;
-    document.getElementById(emailInputElementId).value = generateEmailAddress('');
+    options.load().then(() => {
+        emailDomain = options.emailDomain;
+        updateEmailInputElementValue(generateEmailAddress(''));
+        usernameInputElement.focus()
+    })
     console.log("Crowd User Add Helper Content Script initialized on " + window.location.pathname);
 });
 
 function mirrorUsernameToUserAddFormInputs(event) {
-    document.getElementById(emailInputElementId).value = generateEmailAddress(event.target.value);
+    updateEmailInputElementValue(generateEmailAddress(event.target.value));
     document.getElementById(firstNameInputElementId).value = event.target.value;
     document.getElementById(lastNameInputElementId).value = event.target.value;
     document.getElementById(displayNameInputElementId).value = event.target.value;
 }
 
 function generateEmailAddress(localPart) {
-    return localPart + "@" + defaultEmailDomain;
+    return localPart + "@" + emailDomain;
+}
+
+function updateEmailInputElementValue(email) {
+    getEmailInputElement().value = email;
+}
+
+function getEmailInputElement() {
+    return document.getElementById(emailInputElementId);
 }

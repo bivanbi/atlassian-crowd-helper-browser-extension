@@ -19,8 +19,16 @@ directories.
 ## License
 
 ACHBrE is a [free software](http://www.gnu.org/licenses/quick-guide-gplv3.html) licensed
-under [GNU/GPL v3.0](LICENSE.md). You are free to use, share and modify it as long as you obey the rules laid out by
-GNU/GPL license - basically, your modified copy must also be licensed under GNU/GPL.
+under [GNU/GPL v3.0](LICENSE.md). ACHBrE is free to use, share and modify it as long the rules laid out by
+GNU/GPL license are obeyed.
+
+### 3rd Party Libraries
+
+#### Extension Settings Page Visual Styling
+
+* [Bootstrap](https://getbootstrap.com) is licensed
+  under [MIT license and is copyright 2018 Twitter](https://getbootstrap.com/docs/4.0/about/license/).
+* [JQuery](https://jquery.org/) is licensed under [MIT license](https://jquery.org/license/)
 
 ## Supported Platforms
 
@@ -34,40 +42,13 @@ Tested on Crowd 4.2.3 DataCenter. Should work on Server edition as well, althoug
 in DC edition such as clustering and delegated group administration.
 
 ## Features
+Most features are for click optimization and to eliminate repetitive tasks when managing multiple user directories.
 
-### Create User Helper
+* Focus the most relevant input when opening a page or form, so one can begin to type / paste input right away
+* Speed up user creation by auto-filling inputs
+* Speed up application / user / group operations when having multiple user directories
 
-*Problem: Crowd marks every input field as required. This can be very time-consuming, especially when creating bot users
-that might not even have e-mail address and no one really cares about their *name**.
-
-ACHBrE will auto-generate password, autofill e-mail address, family name and given name inputs.
-
-### Add Group Helper
-
-*Problem: Crowd navigates to the newly created group right away, preventing quick addition of multiple groups.*
-
-ACHBrE prevents Crowd from navigating away from Group Add view, which allows adding multiple directories in rapid
-succession.
-
-*Problem: Crowd manages groups on a directory level. So if you need to have group members from multiple directories, you
-need to create that group in each and every directory.
-
-With ACHBrE, groups can be added to all directories at once.
-
-### Remove Group Helper
-
-*Problem: you created a group in multiple directories, and this group is not needed anymore. One has to go through all
-directories, search the given group in the given directory and remove one by one.*
-
-ACHBrE will allow to remove a given group from all directories at once.
-
-### Application Directory Permission Helper
-
-*Problem: when creating an Application (a consumer to Crowd), and/or assigning new directory to that application, *Crowd
-grants write access for that application to the given directory. *This is a security problem in itself.**
-
-ACHBrE will not (yet) prevent Crowd from doing this, but will certainly help you with *removing* insecure permissions,
-by providing you with a button to remove all (write) permissions from all directories assigned to a given application.
+See [Documentation](documentation/index.md)/[Features](documentation/features/index.md) for more details.
 
 ## Installing
 
@@ -83,6 +64,20 @@ requires [developer mode to be turned on in Google Chrome](https://developer.chr
 1. Browse to the ```src/google-chrome``` directory within the downloaded repository
 
 Once installed, you need to *enable* the plugin on each Crowd UI URL you intend to use it on.
+
+### Installing [Bootstrap](https://getbootstrap.com) for Options page visual styling (optional)
+
+1. Create directory ```src/google-chrome/vendor/bootstrap```
+1. Go to [Download Bootstrap 4.6](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
+1. Download components form the above link into the ```src/google-chrome/vendor/bootstrap``` directory
+   and rename the downloaded files to exclude version numbers.
+   
+The result should be something like this:
+```
+src/google-chrome/vendor/bootstrap/bootstrap.min.css
+src/google-chrome/vendor/bootstrap/bootstrap.bundle.min.js
+src/google-chrome/vendor/bootstrap/jquery.slim.min.js
+```
 
 ## Why browser extension and not Crowd plugin?
 
