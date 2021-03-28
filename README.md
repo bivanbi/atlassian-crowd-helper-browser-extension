@@ -52,32 +52,30 @@ See [Documentation](documentation/index.md)/[Features](documentation/features/in
 
 ## Installing
 
-### Google Chrome: unpacked extension
+### Install From Source
 
 *Adding unpacked extension
 requires [developer mode to be turned on in Google Chrome](https://developer.chrome.com/docs/extensions/mv2/faq/#:~:text=You%20can%20start%20by%20turning,a%20packaged%20extension%2C%20and%20more.)
 .*
 
+Build dependencies:
+* GNU Make
+* Git client
+* ImageMagick (```convert```)
+* Internet connection
+
+
 1. Clone the repository to your local disk
+1. Build target
+   ```
+   cd atlassian-crowd-helper-browser-extension; make
+   ```
+
 1. Open [Chrome Extensions](chrome://extensions)
 1. Click ```Load unpacked``` button
-1. Browse to the ```src/google-chrome``` directory within the downloaded repository
+1. Browse to the ```atlassian-crowd-helper-browser-extension/target/google-chrome``` directory within the downloaded repository
 
 Once installed, you need to *enable* the plugin on each Crowd UI URL you intend to use it on.
-
-### Installing [Bootstrap](https://getbootstrap.com) for Options page visual styling (optional)
-
-1. Create directory ```src/google-chrome/vendor/bootstrap```
-1. Go to [Download Bootstrap 4.6](https://getbootstrap.com/docs/4.6/getting-started/introduction/)
-1. Download components form the above link into the ```src/google-chrome/vendor/bootstrap``` directory
-   and rename the downloaded files to exclude version numbers.
-   
-The result should be something like this:
-```
-src/google-chrome/vendor/bootstrap/bootstrap.min.css
-src/google-chrome/vendor/bootstrap/bootstrap.bundle.min.js
-src/google-chrome/vendor/bootstrap/jquery.slim.min.js
-```
 
 ## Why browser extension and not Crowd plugin?
 
