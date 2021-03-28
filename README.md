@@ -66,6 +66,9 @@ Build dependencies:
 
 Building:
 1. Clone the repository to your local disk
+   ```
+   git clone https://github.com/bivanbi/atlassian-crowd-helper-browser-extension.git
+   ```
 1. Build target
    ```
    cd atlassian-crowd-helper-browser-extension; make
