@@ -1,7 +1,7 @@
 {
     "name": "Atlassian Crowd Helper",
     "description": "Browser extension to streamline Atlassian Crowd admin UI",
-    "version": "1.1.0",
+    "version": "1.1.2",
     "manifest_version": 3,
     "content_scripts": [
         {
