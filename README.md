@@ -64,13 +64,12 @@ Build dependencies:
 * ImageMagick (```convert```)
 * Internet connection
 
-
+Building:
 1. Clone the repository to your local disk
 1. Build target
    ```
    cd atlassian-crowd-helper-browser-extension; make
    ```
-
 1. Open [Chrome Extensions](chrome://extensions)
 1. Click ```Load unpacked``` button
 1. Browse to the ```atlassian-crowd-helper-browser-extension/target/google-chrome``` directory within the downloaded repository
