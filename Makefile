@@ -7,8 +7,11 @@ SRC = src
 DOWNLOAD = download
 TARGET = target
 PACKAGES = packages
+TARGET_APP_DIR_NAME = atlassian-crowd-helper-browser-extension
 
-CHROME_APP_VERSION = $(shell cat $(SRC)/$(CHROME)/manifest.json | grep version | head -1 | cut -d\" -f 4 )
+CHROME_TARGET = $(TARGET)/$(CHROME)/$(TARGET_APP_DIR_NAME)
+
+CHROME_APP_VERSION = $(shell cat $(SRC)/$(CHROME)/manifest.json | grep version | head -1 | cut -d'"' -f 4 )
 
 JQUERY_URL="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 JQUERY_LICENSE_URL="https://jquery.org/license/"
@@ -37,14 +40,17 @@ all: $(CHROME)
 
 
 .PHONY: $(CHROME)
-$(CHROME): $(TARGET)/$(CHROME) \
-			$(TARGET)/$(CHROME)/$(JQUERY_DIR)/LICENSE \
-			$(TARGET)/$(CHROME)/$(JQUERY_DIR)/$(JQUERY_JS) \
-			$(TARGET)/$(CHROME)/$(BOOTSTRAP_DIR)/LICENSE \
-			$(TARGET)/$(CHROME)/$(BOOTSTRAP_DIR)/$(BOOTSTRAP_CSS) \
-			$(TARGET)/$(CHROME)/$(BOOTSTRAP_DIR)/$(BOOTSTRAP_JS) \
-			$(TARGET)/$(CHROME)/$(IMAGE_DIR) \
-			$(PACKAGES)/$(APP_NAME)-$(CHROME)-v$(CHROME_APP_VERSION).zip
+$(CHROME): $(CHROME_TARGET) \
+			$(CHROME_TARGET)/$(JQUERY_DIR)/LICENSE \
+			$(CHROME_TARGET)/$(JQUERY_DIR)/$(JQUERY_JS) \
+			$(CHROME_TARGET)/$(BOOTSTRAP_DIR)/LICENSE \
+			$(CHROME_TARGET)/$(BOOTSTRAP_DIR)/$(BOOTSTRAP_CSS) \
+			$(CHROME_TARGET)/$(BOOTSTRAP_DIR)/$(BOOTSTRAP_JS) \
+			$(CHROME_TARGET)/$(IMAGE_DIR) \
+			$(CHROME_TARGET)/README.md  \
+			$(CHROME_TARGET)/LICENSE.md  \
+			$(CHROME_TARGET)/documentation  \
+			$(PACKAGES)/$(CHROME)/$(TARGET_APP_DIR_NAME)-v$(CHROME_APP_VERSION).zip
 
 $(BOOTSTRAP_ZIP):
 	mkdir -p $(DOWNLOAD)
@@ -54,9 +60,9 @@ $(CLIPART_REPO):
 	mkdir -p $(DOWNLOAD)
 	git clone "$(CLIPART_REPO_URL)" $(CLIPART_REPO)
 
-$(TARGET)/$(CHROME):
-	mkdir -p $(TARGET)/$(CHROME)
-	(cd $(SRC)/$(CHROME) ; tar cf - --exclude="images" --exclude="vendor" --exclude=".gitignore" . ) | (cd $(TARGET)/$(CHROME) ; tar xfBp -)
+$(CHROME_TARGET):
+	mkdir -p $(CHROME_TARGET)
+	(cd $(SRC)/$(CHROME) ; tar cf - --exclude="images" --exclude="vendor" --exclude=".gitignore" . ) | (cd $(CHROME_TARGET) ; tar xfBp -)
 
 %/$(JQUERY_JS):
 	mkdir -p "$$(dirname $@)"
@@ -80,15 +86,25 @@ $(TARGET)/$(CHROME):
 	mkdir -p "$$(dirname $@)"
 	echo "JQuery is licensed under MIT license. See $(JQUERY_LICENSE_URL) for details." > $@
 
-$(TARGET)/$(CHROME)/$(IMAGE_DIR): $(CLIPART_REPO)
-	$(DOWNLOAD)/clipart/make_icons.sh
-	mkdir -p $(TARGET)/$(CHROME)/$(IMAGE_DIR)
-	cp --no-preserve timestamps $(DOWNLOAD)/clipart/src/$(APP_NAME).svg $(TARGET)/$(CHROME)/$(IMAGE_DIR)
-	cp --no-preserve timestamps $(DOWNLOAD)/clipart/target/$(APP_NAME)/*png $(TARGET)/$(CHROME)/$(IMAGE_DIR)/
+$(CHROME_TARGET)/$(IMAGE_DIR): $(CLIPART_REPO)
+	$(DOWNLOAD)/clipart/build_images.sh
+	mkdir -p $(CHROME_TARGET)/$(IMAGE_DIR)
+	cp --no-preserve timestamps $(DOWNLOAD)/clipart/src/$(APP_NAME)/$(APP_NAME).svg $(CHROME_TARGET)/$(IMAGE_DIR)/
+	cp --no-preserve timestamps $(DOWNLOAD)/clipart/target/$(APP_NAME)/*png $(CHROME_TARGET)/$(IMAGE_DIR)/
 
-$(PACKAGES)/$(APP_NAME)-$(CHROME)-%.zip:
-	mkdir -p $(PACKAGES)
-	zip -r $@ $(TARGET)/$(CHROME)
+$(PACKAGES)/$(CHROME)/$(TARGET_APP_DIR_NAME)-v%.zip:
+	mkdir -p $(PACKAGES)/$(CHROME)
+	cd $(TARGET)/$(CHROME) && zip -r $(TARGET_APP_DIR_NAME).zip $(TARGET_APP_DIR_NAME)
+	mv $(TARGET)/$(CHROME)/$(TARGET_APP_DIR_NAME).zip $@
+
+$(CHROME_TARGET)/LICENSE.md:
+	cp --no-preserve timestamps LICENSE.md $@
+
+$(CHROME_TARGET)/README.md:
+	cp --no-preserve timestamps README.md $@
+
+$(CHROME_TARGET)/documentation:
+	cp -R --no-preserve timestamps documentation $@
 
 clean:
 	rm -rf $(TARGET) $(DOWNLOAD)
