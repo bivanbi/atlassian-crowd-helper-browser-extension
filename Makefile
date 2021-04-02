@@ -22,6 +22,7 @@ BOOTSTRAP_ZIP = $(DOWNLOAD)/bootstrap.zip
 
 CLIPART_REPO_URL="https://github.com/bivanbi/atlassian-tools-clipart.git"
 CLIPART_REPO = $(DOWNLOAD)/clipart
+CLIPART_VERSION = v2.0.0
 
 JQUERY_URL="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 
@@ -47,7 +48,7 @@ $(CHROME): $(CHROME_TARGET) \
 			$(CHROME_TARGET)/$(BOOTSTRAP_DIR)/$(BOOTSTRAP_CSS) \
 			$(CHROME_TARGET)/$(BOOTSTRAP_DIR)/$(BOOTSTRAP_JS) \
 			$(CHROME_TARGET)/$(IMAGE_DIR) \
-			$(CHROME_TARGET)/README.md  \
+			$(CHROME_TARGET)/README.md \
 			$(CHROME_TARGET)/LICENSE.md  \
 			$(CHROME_TARGET)/documentation  \
 			$(PACKAGES)/$(CHROME)/$(TARGET_APP_DIR_NAME)-v$(CHROME_APP_VERSION).zip
@@ -59,6 +60,7 @@ $(BOOTSTRAP_ZIP):
 $(CLIPART_REPO):
 	mkdir -p $(DOWNLOAD)
 	git clone "$(CLIPART_REPO_URL)" $(CLIPART_REPO)
+	git -C $(CLIPART_REPO) checkout $(CLIPART_VERSION)
 
 $(CHROME_TARGET):
 	mkdir -p $(CHROME_TARGET)
@@ -89,8 +91,8 @@ $(CHROME_TARGET):
 $(CHROME_TARGET)/$(IMAGE_DIR): $(CLIPART_REPO)
 	$(DOWNLOAD)/clipart/build_images.sh
 	mkdir -p $(CHROME_TARGET)/$(IMAGE_DIR)
-	cp --no-preserve timestamps $(DOWNLOAD)/clipart/src/$(APP_NAME)/$(APP_NAME).svg $(CHROME_TARGET)/$(IMAGE_DIR)/
-	cp --no-preserve timestamps $(DOWNLOAD)/clipart/target/$(APP_NAME)/*png $(CHROME_TARGET)/$(IMAGE_DIR)/
+	cp --no-preserve timestamps $(DOWNLOAD)/clipart/target/$(APP_NAME)/$(APP_NAME)-favicon.svg $(CHROME_TARGET)/$(IMAGE_DIR)/$(APP_NAME)-favicon.svg
+	cp --no-preserve timestamps $(DOWNLOAD)/clipart/target/$(APP_NAME)/$(APP_NAME)[0-9]*.png $(CHROME_TARGET)/$(IMAGE_DIR)/
 
 $(PACKAGES)/$(CHROME)/$(TARGET_APP_DIR_NAME)-v%.zip:
 	mkdir -p $(PACKAGES)/$(CHROME)
